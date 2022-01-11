@@ -8,26 +8,48 @@ These are the kinds of partenthesis this program will look for.
 */
 typedef struct Stack {
     char opening_par;
-    char* content;
     struct Stack * next;
 } Stack;
 
 
 void print_my_text(String text) {
-    //printf("\n");
+    printf("'");
     for(int index = 0; text[index] != '\0'; index++) {
         printf("%c", text[index]);
     }
+    printf("'");
     printf("\n");
 }
 
+void add_to_stack(String text) {
+    //nur Klammern in den Stack laden, den Rest "wegfallen" lassen.
+    for(int index = 0; text[index] != '\0'; index++) {
+        //if parentheses 
+        if (text[index] == '(' || text[index] == ')') {
+                //add to stack 
+        }
+
+        if (text[index] == '<' || text[index] == '>') {
+            //add to stack 
+        }
+        
+        if (text[index] == '[' || text[index] == ']') {
+            //add to stack 
+        }
+        
+        if (text[index] == '{' || text[index] == '}') {
+            //add to stack 
+        }
+    }
+}
 
 
 bool verify_parentheses(String text) {
-    for(int index = 0; text[index] != '\0'; index++) {
-        
+    add_to_stack(text);
+    //stack bearbeiten 
+    if (false){
+        return true;
     }
-    return false;
 }
 
 int main(void) {
