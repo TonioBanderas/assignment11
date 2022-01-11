@@ -7,7 +7,7 @@ These are the kinds of partenthesis this program will look for.
     {}
 */
 typedef struct Stack {
-    char opening_par;
+    char content;
     struct Stack * next;
 } Stack;
 
