@@ -1,7 +1,32 @@
 #include "base.h"
+/*
+These are the kinds of partenthesis this program will look for.
+    ()
+    <>
+    []
+    {}
+*/
+typedef struct Stack {
+    char opening_par;
+    char* content;
+    struct Stack * next;
+} Stack;
+
+
+void print_my_text(String text) {
+    //printf("\n");
+    for(int index = 0; text[index] != '\0'; index++) {
+        printf("%c", text[index]);
+    }
+    printf("\n");
+}
+
+
 
 bool verify_parentheses(String text) {
-    // TODO
+    for(int index = 0; text[index] != '\0'; index++) {
+        
+    }
     return false;
 }
 
@@ -19,6 +44,5 @@ int main(void) {
     test_equal_i(verify_parentheses("< [ > ]"), false);
     test_equal_i(verify_parentheses("<{[()]}"), false);
     test_equal_i(verify_parentheses("(<<({[({<{<({<([[[<[{(<{(<{{<[{<{{{<<{([<<<{{[{<<[[(([{[[[([(({()}))])]]]}]))]]>>}]}}>>>])}>>}}}>}]>}}>)}>)}]>]]])>})>}>})]})>>)"), true);
-
     return 0;
 }
