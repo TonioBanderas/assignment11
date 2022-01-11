@@ -1,16 +1,16 @@
 #include "base.h"
-/*
-These are the kinds of partenthesis this program will look for.
-    ()
-    <>
-    []
-    {}
-*/
+
 typedef struct Stack {
     char content;
     struct Stack * next;
 } Stack;
 
+Stack * stack_new() {
+    //stacknew ist responsible for deleting s. i think. whatever that means.
+    Stack * s = xcalloc(1, sizeof(Stack));
+    s->next = NULL;
+    return (s);
+}
 
 void print_my_text(String text) {
     printf("'");
@@ -23,10 +23,12 @@ void print_my_text(String text) {
 
 void add_to_stack(String text) {
     //nur Klammern in den Stack laden, den Rest "wegfallen" lassen.
+    Stack * stack = stack_new;
     for(int index = 0; text[index] != '\0'; index++) {
+         
         //if parentheses 
         if (text[index] == '(' || text[index] == ')') {
-                //add to stack 
+            stack->content = '('; 
         }
 
         if (text[index] == '<' || text[index] == '>') {
