@@ -126,7 +126,7 @@ bool verify_parentheses(String text) {
 
 int main(void) {
     //report_memory_leaks(true);
-    
+
     test_equal_i(verify_parentheses("hello"), true);
     test_equal_i(verify_parentheses("Hello World"), true);
     test_equal_i(verify_parentheses("()"), true);
