@@ -19,6 +19,12 @@ void stack_push(Stack * stack, char parentheses) {
     stack->next = old_stack;
 }
 
+void stack_pop(Stack * stack) {
+    //pop first element 
+    printsln("pop");
+}
+
+
 void stack_print(Stack * stack) {
     if (stack->next == NULL) {
       printcln(stack->content);  
@@ -29,7 +35,7 @@ void stack_print(Stack * stack) {
     }
 }
 
-void add_to_stack(String text) {
+Stack add_to_stack(String text) {
     Stack * stack = stack_new();
 
     for(int index = 0; text[index] != '\0'; index++) {
@@ -57,16 +63,72 @@ void add_to_stack(String text) {
         if (text[index] == '}') {
             stack_push(stack, text[index]);
         }
+    
+    //verhältniss letze zwei stack elemente
+
+    switch (stack->content) {
+        case ')' :
+            if (stack->next->content == '(') {
+                stack_pop(stack);
+                //stack_pop(stack);
+
+            }
+            break;
+
+        case '}' :
+            if (stack->next->content == '(') {
+                stack_pop(stack);
+                //stack_pop(stack);
+
+            }
+            break;
+
+        case '>' :
+            if (stack->next->content == '(') {
+                stack_pop(stack);
+                //stack_pop(stack);
+
+            }
+            break;
+
+        case ']' :
+            if (stack->next->content == '(') {
+                stack_pop(stack);
+                //stack_pop(stack);
+            }
+            break;
+    }
 
     }
-    stack_print(stack);
+    //stack_print(stack);
+    return *stack;
+}
+
+int stack_length(Stack * stack) {
+    if (stack->next == NULL) {
+        return 0;
+    }
+    else {
+        return 1 + stack_length(stack->next);
+    }
 }
 
 
+
 bool verify_parentheses(String text) {
-    add_to_stack(text);
-    //stack bearbeiten 
-    return true;
+    Stack stack = add_to_stack(text);
+    
+    if (stack_length(&stack) % 2 == 0) {
+        return true;
+    }
+    else {
+        if(stack.next == NULL) { //if stack is empty ?!
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 int main(void) {
@@ -75,8 +137,9 @@ int main(void) {
     test_equal_i(verify_parentheses("hello"), true);
     test_equal_i(verify_parentheses("Hello World"), true);
     test_equal_i(verify_parentheses("()"), true);
-    /*
+
     test_equal_i(verify_parentheses("<{[()]}>"), true);
+    /*
     test_equal_i(verify_parentheses("<{[)]}>"), false);
     test_equal_i(verify_parentheses("( Test ) "), true);
     test_equal_i(verify_parentheses("(1+2)*[2+3+(1 + 6/5)]"), true);
