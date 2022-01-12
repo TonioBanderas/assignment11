@@ -10,7 +10,7 @@ These are the kinds of partenthesis this program will look for.
 */
 typedef struct Stack {
     char parenthesis;
-    struct Stack * next;
+    struct Stack* next;
 } Stack;
 
 Stack* make_stack() {
@@ -20,11 +20,12 @@ Stack* make_stack() {
     return stack;
 }
 
-Stack* push(char parenthesis, Stack old_stack) {
+Stack* push(char parenthesis, Stack * old_stack) {
     Stack *new_stack = make_stack();
-    new_stack->next = &old_stack;
+    new_stack->next = old_stack;
     new_stack->parenthesis = parenthesis;
     return new_stack;
+    
 }
 
 bool is_stack_empty(Stack* stack) {
@@ -44,12 +45,12 @@ void print_fn(Stack* stack) {
     }
 }
 
-Stack* pop(Stack* stack) {
-    Stack* temp;
+void pop(Stack* stack) {
+    printf("dieses element wird gepoppt: %c\n", stack->parenthesis);
+    Stack* temp = make_stack();
     temp = stack;
-    stack = stack->next;
-    temp->parenthesis = 0;
-    free(temp);
+    stack->parenthesis = stack->next->parenthesis;
+    stack->next = stack->next->next;
 }
 
 void print_my_text(String text) {
@@ -61,23 +62,18 @@ void print_my_text(String text) {
 }
 
 bool is_opposite(char open, char close) {
-    if( open == '(' && close == ')' ||
-        open == '<' && close == '>' ||
-        open == '{' && close == '}' ||
-        open == '[' && close == '}') {
+    if( (open == '(' && close == ')') ||
+        (open == '<' && close == '>') ||
+        (open == '{' && close == '}') ||
+        (open == '[' && close == '}')) {
         return true;
     }
     return false;
 
 }
-
-Stack* rmv_par(Stack* stack){
-    if()
-}
-
+/*
 bool verify_parentheses(String text) {
     Stack* stack;// = make_stack();
-    if(is_opposite('(', ')') {printf("\n\n\nWOW\n\n\n")};
     for(int index = 0; text[index] != '\0'; index++) {
         //stack = push(text[index], *stack);
         //printf("%c", stack->parenthesis);
@@ -90,20 +86,22 @@ bool verify_parentheses(String text) {
             text[index] == '>' ||
             text[index] == '}' ||
             text[index] == ']')
-        {   
-            stack = push(text[index], *stack);
-            if(stack->next->parenthesis == )
+            {   
+            stack = push(text[index], stack);
+                while(is_opposite(stack->next->parenthesis, stack->parenthesis)){
+                    stack = pop(stack);
+                
+                    printf("dieses element liegt oben auf: %c\n", stack->parenthesis);
+                    stack = pop(stack);
+                }
+            }
         }
-        
-        
-    
-    }   
-    
     return false;
 }
-
+*/
 int main(void) {
-    report_memory_leaks(true);
+    //report_memory_leaks(true);
+    /*
     test_equal_i(verify_parentheses(""), true);
     test_equal_i(verify_parentheses("Hello World"), true);
     test_equal_i(verify_parentheses("()"), true);
@@ -115,5 +113,15 @@ int main(void) {
     test_equal_i(verify_parentheses("< [ > ]"), false);
     test_equal_i(verify_parentheses("<{[()]}"), false);
     test_equal_i(verify_parentheses("(<<({[({<{<({<([[[<[{(<{(<{{<[{<{{{<<{([<<<{{[{<<[[(([{[[[([(({()}))])]]]}]))]]>>}]}}>>>])}>>}}}>}]>}}>)}>)}]>]]])>})>}>})]})>>)"), true);
+    */
+    
+    Stack* stack = make_stack();
+    stack = push('"', stack);
+    stack = push('r', stack);
+   
+    pop(stack);
+    //printf("%c", stack->parenthesis);
+    pop(stack);
+    //pop(stack);
     return 0;
 }
