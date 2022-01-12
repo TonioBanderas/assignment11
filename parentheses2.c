@@ -10,17 +10,19 @@ Stack * stack_new() {
     s->next = NULL;
     return (s);
 }
-
-void stack_print(Stack * stack) {
-    if (stack->next == NULL) {
-      printcln(stack->content);  
+/*  //for troubleshooting 
+    void stack_print(Stack * stack) {
+        if (stack->next == NULL) {
+        printcln(stack->content);  
+        }
+        else {
+            printcln(stack->content);
+            stack_print(stack->next);
+        }
     }
-    else {
-        printcln(stack->content);
-        stack_print(stack->next);
-    }
-}
+*/
 
+/*    //for troubleshooting
 int stack_length(Stack * stack) {
     if (stack->next == NULL) {
         return 0;
@@ -29,6 +31,7 @@ int stack_length(Stack * stack) {
         return 1 + stack_length(stack->next);
     }
 }
+*/
 
 void stack_push(Stack * stack, char parentheses) {
     Stack * old_stack = stack_new();
@@ -49,14 +52,14 @@ Stack* stack_pop(Stack * stack) {
 
 Stack* call_switch(Stack * stack) {
     if (stack->content == ')' && stack->next->content == '(') {    
-        printsln("pop '( und )'"); 
+        //printsln("pop '( und )'"); 
         stack = stack_pop(stack);
         stack = stack_pop(stack);
         return stack;
     }
    
     if (stack->content == '}' && stack->next->content == '{') {
-        printsln("pop '{ und }'"); 
+        //printsln("pop '{ und }'"); 
         stack = stack_pop(stack);
         stack = stack_pop(stack); 
         return stack;
@@ -64,7 +67,7 @@ Stack* call_switch(Stack * stack) {
     }
     
     if (stack->content == '>' && stack->next->content == '<') {
-        printsln("pop '< und >'"); 
+        //printsln("pop '< und >'"); 
         stack = stack_pop(stack);
         stack = stack_pop(stack);
         return stack;
@@ -72,7 +75,7 @@ Stack* call_switch(Stack * stack) {
     }
     
     if (stack->content == ']' && stack->next->content == '[') {
-        printsln("pop '[ und ]'"); 
+        //printsln("pop '[ und ]'"); 
         stack = stack_pop(stack);
         stack = stack_pop(stack);
         return stack;
@@ -104,8 +107,8 @@ Stack add_to_stack(String text) {
 
         stack = call_switch(stack);
     }
-    stack_print(stack);
-    printiln(stack_length(stack));
+    //stack_print(stack);               //oben funktionen einkommentieren! 
+    //printiln(stack_length(stack));    //oben funktionen einkommentieren! 
     return *stack;
 }
 
@@ -113,7 +116,7 @@ Stack add_to_stack(String text) {
 bool verify_parentheses(String text) {
     Stack stack = add_to_stack(text);
 
-    if(stack.next == NULL) { //if stack is empty 
+    if(stack.next == NULL) { //if stack is empty (parentheses match)
         return true;
     }
     else {
@@ -123,14 +126,12 @@ bool verify_parentheses(String text) {
 
 int main(void) {
     //report_memory_leaks(true);
-
+    
     test_equal_i(verify_parentheses("hello"), true);
     test_equal_i(verify_parentheses("Hello World"), true);
     test_equal_i(verify_parentheses("()"), true);
     test_equal_i(verify_parentheses("<{[()]}>"), true);
-
     test_equal_i(verify_parentheses("<{[)]}>"), false);
-
     test_equal_i(verify_parentheses("( Test ) "), true);
     test_equal_i(verify_parentheses("(1+2)*[2+3+(1 + 6/5)]"), true);
     test_equal_i(verify_parentheses("(an unmatched left parenthesis creates an unresolved tension that will stay with you all day"), false);
