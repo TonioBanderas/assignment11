@@ -35,43 +35,12 @@ void stack_print(Stack * stack) {
     }
 }
 
-Stack add_to_stack(String text) {
-    Stack * stack = stack_new();
-
-    for(int index = 0; text[index] != '\0'; index++) {
-        if (text[index] == '(') {
-            stack_push(stack, text[index]);
-        }        
-        if (text[index] == ')') {
-            stack_push(stack, text[index]);
-        }        
-        if (text[index] == '<') {
-            stack_push(stack, text[index]);
-        }        
-        if (text[index] == '>') {
-            stack_push(stack, text[index]);
-        }        
-        if (text[index] == '[') {
-            stack_push(stack, text[index]);
-        }        
-        if (text[index] == ']') {
-            stack_push(stack, text[index]);
-        }        
-        if (text[index] == '{') {
-            stack_push(stack, text[index]);
-        }        
-        if (text[index] == '}') {
-            stack_push(stack, text[index]);
-        }
-    
-    //verhältniss letze zwei stack elemente
-
+void call_switch(Stack * stack) {
     switch (stack->content) {
         case ')' :
             if (stack->next->content == '(') {
                 stack_pop(stack);
                 //stack_pop(stack);
-
             }
             break;
 
@@ -79,7 +48,6 @@ Stack add_to_stack(String text) {
             if (stack->next->content == '(') {
                 stack_pop(stack);
                 //stack_pop(stack);
-
             }
             break;
 
@@ -87,7 +55,6 @@ Stack add_to_stack(String text) {
             if (stack->next->content == '(') {
                 stack_pop(stack);
                 //stack_pop(stack);
-
             }
             break;
 
@@ -99,8 +66,32 @@ Stack add_to_stack(String text) {
             break;
     }
 
+
+}
+
+
+Stack add_to_stack(String text) {
+    Stack * stack = stack_new();
+
+    for(int index = 0; text[index] != '\0'; index++) {
+        if (text[index] == '(' || text[index] == ')') {
+            stack_push(stack, text[index]);
+        }        
+     
+        if (text[index] == '<' || text[index] == '>') {
+            stack_push(stack, text[index]);
+        }        
+   
+        if (text[index] == '['|| text[index] == ']') {
+            stack_push(stack, text[index]);
+        }        
+    
+        if (text[index] == '{'|| text[index] == '}') {
+            stack_push(stack, text[index]);
+        }        
+
+        call_switch(stack);
     }
-    //stack_print(stack);
     return *stack;
 }
 
