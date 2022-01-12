@@ -23,16 +23,17 @@ void print_my_text(String text) {
 
 void add_to_stack(String text) {
     //nur Klammern in den Stack laden, den Rest "wegfallen" lassen.
-    Stack * stack = stack_new;
+    Stack * stack = stack_new();
     
-    for(int index = 0; text[index] != '\0'; index++) {
-
-        if (text[index] == '(' || text[index] == ')') {
-        stack->content = text[index];
-        stack->next->content = x;
-        }
-
-    }
+    //for(int index = 0; text[index] != '\0'; index++) {
+    Stack * new_stack = stack_new();
+ 
+    stack->content = text[1];
+    stack->next = new_stack;
+    new_stack->content = text[1-1];
+    //}
+    printcln(stack->content);
+    printcln(new_stack->content);
 }
 
 
@@ -45,7 +46,7 @@ bool verify_parentheses(String text) {
 int main(void) {
     //report_memory_leaks(true);
 
-    test_equal_i(verify_parentheses(""), true);
+    test_equal_i(verify_parentheses("hallo"), true);
     //test_equal_i(verify_parentheses("Hello World"), true);
     //test_equal_i(verify_parentheses("()"), true);
     /*
