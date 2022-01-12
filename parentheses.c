@@ -6,12 +6,11 @@ typedef struct Stack {
 } Stack;
 
 Stack * stack_new() {
-    //stacknew ist responsible for deleting s. i think. whatever that means.
     Stack * s = xcalloc(1, sizeof(Stack));
     s->next = NULL;
     return (s);
 }
-
+/*
 void print_my_text(String text) {
     printf("'");
     for(int index = 0; text[index] != '\0'; index++) {
@@ -20,6 +19,7 @@ void print_my_text(String text) {
     printf("'");
     printf("\n");
 }
+*/
 
 void add_to_stack(String text) {
     //nur Klammern in den Stack laden, den Rest "wegfallen" lassen.
@@ -31,19 +31,7 @@ void add_to_stack(String text) {
         stack->content = text[index];
         stack->next->content = x;
         }
-/*
-        if (text[index] == '<' || text[index] == '>') {
-            //add to stack 
-        }
-        
-        if (text[index] == '[' || text[index] == ']') {
-            //add to stack 
-        }
-        
-        if (text[index] == '{' || text[index] == '}') {
-            //add to stack 
-        }
-*/
+
     }
 }
 
@@ -51,10 +39,6 @@ void add_to_stack(String text) {
 bool verify_parentheses(String text) {
     add_to_stack(text);
     //stack bearbeiten 
-    if (false){
-        return true;
-    }
-
     return true;
 }
 
@@ -62,8 +46,8 @@ int main(void) {
     //report_memory_leaks(true);
 
     test_equal_i(verify_parentheses(""), true);
-    test_equal_i(verify_parentheses("Hello World"), true);
-    test_equal_i(verify_parentheses("()"), true);
+    //test_equal_i(verify_parentheses("Hello World"), true);
+    //test_equal_i(verify_parentheses("()"), true);
     /*
     test_equal_i(verify_parentheses("<{[()]}>"), true);
     test_equal_i(verify_parentheses("<{[)]}>"), false);
