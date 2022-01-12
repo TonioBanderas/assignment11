@@ -47,7 +47,6 @@ Stack* stack_pop(Stack * stack) {
 
 }
 
-
 Stack* call_switch(Stack * stack) {
     if (stack->content == ')' && stack->next->content == '(') {    
         printsln("pop '( und )'"); 
@@ -111,21 +110,14 @@ Stack add_to_stack(String text) {
 }
 
 
-
-
 bool verify_parentheses(String text) {
     Stack stack = add_to_stack(text);
-    
-    if (stack_length(&stack) % 2 == 0) {
+
+    if(stack.next == NULL) { //if stack is empty 
         return true;
     }
     else {
-        if(stack.next == NULL) { //if stack is empty ?!
-            return true;
-        }
-        else {
-            return false;
-        }
+        return false;
     }
 }
 
@@ -135,16 +127,16 @@ int main(void) {
     test_equal_i(verify_parentheses("hello"), true);
     test_equal_i(verify_parentheses("Hello World"), true);
     test_equal_i(verify_parentheses("()"), true);
-
     test_equal_i(verify_parentheses("<{[()]}>"), true);
-    /*
+
     test_equal_i(verify_parentheses("<{[)]}>"), false);
+
     test_equal_i(verify_parentheses("( Test ) "), true);
     test_equal_i(verify_parentheses("(1+2)*[2+3+(1 + 6/5)]"), true);
     test_equal_i(verify_parentheses("(an unmatched left parenthesis creates an unresolved tension that will stay with you all day"), false);
     test_equal_i(verify_parentheses("< [ > ]"), false);
     test_equal_i(verify_parentheses("<{[()]}"), false);
     test_equal_i(verify_parentheses("(<<({[({<{<({<([[[<[{(<{(<{{<[{<{{{<<{([<<<{{[{<<[[(([{[[[([(({()}))])]]]}]))]]>>}]}}>>>])}>>}}}>}]>}}>)}>)}]>]]])>})>}>})]})>>)"), true);
-    */
+    
     return 0;
 }
