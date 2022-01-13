@@ -33,12 +33,22 @@ int stack_length(Stack * stack) {
 }
 */
 
+void free_stack (Stack *stack) {
+    if (stack->next == NULL) {
+        free(stack);
+    } else {
+        free(stack->next);
+        free(stack);
+    }
+}
+
 void stack_push(Stack * stack, char parentheses) {
     Stack * old_stack = stack_new();
     old_stack->content = stack->content;
     old_stack->next = stack->next;
     stack->content = parentheses;
     stack->next = old_stack;
+    free(old_stack);
 }
 
 Stack* stack_pop(Stack * stack) {
@@ -46,6 +56,7 @@ Stack* stack_pop(Stack * stack) {
 
     temp->content = stack->next->content;
     temp->next = stack->next->next;
+    free_stack(stack);
     return temp;
 
 }
@@ -55,6 +66,7 @@ Stack* call_switch(Stack * stack) {
         //printsln("pop '( und )'"); 
         stack = stack_pop(stack);
         stack = stack_pop(stack);
+        
         return stack;
     }
    
@@ -117,15 +129,17 @@ bool verify_parentheses(String text) {
     Stack stack = add_to_stack(text);
 
     if(stack.next == NULL) { //if stack is empty (parentheses match)
+
         return true;
     }
     else {
+
         return false;
     }
 }
 
 int main(void) {
-    //report_memory_leaks(true);
+    report_memory_leaks(true);
 
     test_equal_i(verify_parentheses("hello"), true);
     test_equal_i(verify_parentheses("Hello World"), true);
